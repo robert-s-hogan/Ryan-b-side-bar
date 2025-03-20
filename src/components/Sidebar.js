@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext";
 
@@ -27,23 +28,45 @@ export default function Sidebar() {
 
         <nav className="mt-5 w-full">
           <ul className="space-y-4">
-            <li className="flex items-center space-x-2 cursor-pointer hover:text-gray-300">
-              <span>🏠</span> {isOpen && <span>Dashboard</span>}
+            <li>
+              <Link
+                to="/"
+                className="flex items-center space-x-2 hover:text-gray-300"
+              >
+                <span>🏠</span> {isOpen && <span>Dashboard</span>}
+              </Link>
             </li>
             {isAuthenticated && (
               <>
-                <li className="flex items-center space-x-2 cursor-pointer hover:text-gray-300">
-                  <span>⚙️</span> {isOpen && <span>Settings</span>}
+                <li>
+                  <Link
+                    to="/settings"
+                    className="flex items-center space-x-2 hover:text-gray-300"
+                  >
+                    <span>⚙️</span> {isOpen && <span>Settings</span>}
+                  </Link>
                 </li>
-                <li className="flex items-center space-x-2 cursor-pointer hover:text-gray-300">
-                  <span>👤</span> {isOpen && <span>Profile</span>}
+                <li>
+                  <Link
+                    to="/profile"
+                    className="flex items-center space-x-2 hover:text-gray-300"
+                  >
+                    <span>👤</span> {isOpen && <span>Profile</span>}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/quiz"
+                    className="flex items-center space-x-2 hover:text-gray-300"
+                  >
+                    <span>📝</span> {isOpen && <span>Quiz</span>}
+                  </Link>
                 </li>
               </>
             )}
           </ul>
         </nav>
 
-        {/* Login/Logout Button */}
         <button
           className="mt-auto w-full text-left flex items-center space-x-2 cursor-pointer hover:text-gray-300"
           onClick={isAuthenticated ? logout : login}
