@@ -1,11 +1,22 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext";
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, login, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleAuthClick = () => {
+    if (isAuthenticated) {
+      logout();
+      navigate("/login");
+    } else {
+      login();
+      navigate("/");
+    }
+  };
 
   return (
     <div className="flex">
@@ -28,16 +39,16 @@ export default function Sidebar() {
 
         <nav className="mt-5 w-full">
           <ul className="space-y-4">
-            <li>
-              <Link
-                to="/"
-                className="flex items-center space-x-2 hover:text-gray-300"
-              >
-                <span>🏠</span> {isOpen && <span>Dashboard</span>}
-              </Link>
-            </li>
             {isAuthenticated && (
               <>
+                <li>
+                  <Link
+                    to="/"
+                    className="flex items-center space-x-2 hover:text-gray-300"
+                  >
+                    <span>🏠</span> {isOpen && <span>Dashboard</span>}
+                  </Link>
+                </li>
                 <li>
                   <Link
                     to="/settings"
@@ -69,7 +80,7 @@ export default function Sidebar() {
 
         <button
           className="mt-auto w-full text-left flex items-center space-x-2 cursor-pointer hover:text-gray-300"
-          onClick={isAuthenticated ? logout : login}
+          onClick={handleAuthClick}
         >
           <span>🚪</span>
           {isOpen && <span>{isAuthenticated ? "Logout" : "Login"}</span>}
